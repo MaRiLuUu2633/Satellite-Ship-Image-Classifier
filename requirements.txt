@@ -1,0 +1,11 @@
+datasets
+Pillow
+scikit-learn
+scikit-image
+joblib
+fastapi
+uvicorn
+python-multipart
+numpy
+matplotlib
+pandas

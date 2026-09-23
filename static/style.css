@@ -1,0 +1,212 @@
+:root {
+    --bg-color: #0f172a;
+    --panel-bg: rgba(30, 41, 59, 0.7);
+    --text-color: #f8fafc;
+    --accent-color: #3b82f6;
+    --accent-hover: #60a5fa;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+}
+
+body {
+    margin: 0;
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.background-anim {
+    position: fixed;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at center, #1e3a8a 0%, transparent 40%),
+                radial-gradient(circle at bottom right, #312e81 0%, transparent 40%);
+    z-index: -1;
+    animation: drift 20s infinite linear alternate;
+}
+
+@keyframes drift {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(10deg); }
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-btn.active {
+    background: var(--accent-color);
+    border-color: var(--accent-hover);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.glass-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.upload-area {
+    border: 2px dashed rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.upload-area:hover, .upload-area.dragover {
+    border-color: var(--accent-color);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.result-display {
+    text-align: center;
+}
+
+#preview-img {
+    max-width: 200px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+#prediction-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+#confidence-bar-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.confidence-bar-bg {
+    background: rgba(255,255,255,0.1);
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.confidence-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--success-color);
+    transition: width 0.5s ease-out;
+}
+
+.action-btn {
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-family: inherit;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block;
+    margin: 0 auto 2rem auto;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.metric-card {
+    background: rgba(0,0,0,0.2);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.metric-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: #94a3b8;
+    font-size: 1rem;
+}
+
+.metric-card p {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent-hover);
+}
+
+.chart-wrapper {
+    background: rgba(0,0,0,0.2);
+    padding: 1rem;
+    border-radius: 12px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.tech-content h3 {
+    color: var(--accent-hover);
+    margin-top: 2rem;
+}
+
+.tech-content p {
+    line-height: 1.6;
+    color: #cbd5e1;
+}

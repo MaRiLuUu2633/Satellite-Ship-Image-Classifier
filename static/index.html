@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship Classification AI</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-anim"></div>
+    <div class="container">
+        <header>
+            <h1>Ship Detection AI</h1>
+            <p>High-precision satellite imagery classification using Convolutional Neural Networks</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" onclick="showSection('live-test')">Live Testing</button>
+            <button class="nav-btn" onclick="showSection('blind-test')">Evaluation Metrics</button>
+            <button class="nav-btn" onclick="showSection('tech-demo')">Technical Demo</button>
+        </nav>
+
+        <main>
+            <!-- Live Testing Section -->
+            <section id="live-test" class="glass-panel active">
+                <h2>Live Inference Engine</h2>
+                <div class="upload-area" id="drop-zone" onclick="document.getElementById('file-input').click()">
+                    <p>Drag & Drop an 80x80 RGB image here or click to upload</p>
+                    <input type="file" id="file-input" hidden accept="image/*" onchange="handleFileUpload(event)">
+                </div>
+                <div class="result-display" id="result-display">
+                    <img id="preview-img" src="" alt="Preview" style="display:none;">
+                    <div id="prediction-text">Upload an image to see prediction</div>
+                    <div id="confidence-bar-container" style="display:none;">
+                        <div class="confidence-bar-bg">
+                            <div class="confidence-bar-fill" id="confidence-bar"></div>
+                        </div>
+                        <span id="confidence-text"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Blind Test / Evaluation Section -->
+            <section id="blind-test" class="glass-panel" style="display:none;">
+                <h2>Blind Test Evaluation</h2>
+                <p>Run the model on the unseen blind test folder to calculate real-time performance metrics.</p>
+                <button class="action-btn" onclick="runEvaluation()" id="eval-btn">Run Evaluation on Test Set</button>
+                <div id="loading-spinner" style="display:none;">Running evaluation... please wait...</div>
+                
+                <div class="metrics-grid" id="metrics-grid" style="display:none;">
+                    <div class="metric-card">
+                        <h3>Accuracy</h3>
+                        <p id="metric-accuracy">0%</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Precision</h3>
+                        <p id="metric-precision">0%</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Recall</h3>
+                        <p id="metric-recall">0%</p>
+                    </div>
+                </div>
+
+                <div class="charts-container" id="charts-container" style="display:none;">
+                    <div class="chart-wrapper">
+                        <canvas id="confusionMatrix"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technical Demo Section -->
+            <section id="tech-demo" class="glass-panel" style="display:none;">
+                <h2>Architecture & Optimization</h2>
+                <div class="tech-content">
+                    <h3>1. Preprocessing</h3>
+                    <p>Satellite imagery undergoes data augmentation (random flips and rotations) during training to increase robustness. We also normalize the images using ImageNet statistics to ensure numerical stability and faster convergence.</p>
+                    
+                    <h3>2. Visual Descriptors & Architecture</h3>
+                    <p>Instead of manual descriptors (like HOG or SIFT), this model utilizes a <strong>Convolutional Neural Network (CNN)</strong>. The CNN consists of 4 convolutional blocks with increasing filter sizes (32 -> 64 -> 128 -> 256), followed by Batch Normalization to prevent internal covariate shift. This enables the model to automatically learn hierarchical visual features tailored for ship detection.</p>
+                    
+                    <h3>3. Hyperparameters & Cross-Validation</h3>
+                    <p>We train using the Adam optimizer with a learning rate of 0.001 and BCEWithLogitsLoss. To ensure generalizability and avoid overfitting, we perform a <strong>5-fold Cross-Validation</strong> across the training set before isolating the best model weights for this final blind evaluation.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
