@@ -76,7 +76,3 @@ La aplicación permite:
 
 - El tamaño de imagen (80×80) es un requerimiento fijo del proyecto; las mejoras de accuracy se buscan por arquitectura y augmentación, no por resolución de entrada.
 - La arquitectura del modelo en `ship_detection_ui_v1.5.py` debe coincidir exactamente con la definida en `train_ships_v1.5_finetune.py` para poder cargar los pesos guardados (`state_dict`).
-
-## Licencia
-
-Agrega aquí la licencia de tu preferencia (por ejemplo, MIT) si planeas hacer público el repositorio.
