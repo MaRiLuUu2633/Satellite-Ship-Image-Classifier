@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ship Classification AI</title>
+    <title>Ship Classification AI - Test Day</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -13,17 +13,17 @@
     <div class="container">
         <header>
             <h1>Ship Detection AI</h1>
-            <p>High-precision satellite imagery classification using Convolutional Neural Networks</p>
+            <p>High-precision satellite imagery classification using Machine Learning (HOG + Random Forest)</p>
         </header>
 
         <nav>
-            <button class="nav-btn active" onclick="showSection('live-test')">Live Testing</button>
-            <button class="nav-btn" onclick="showSection('blind-test')">Evaluation Metrics</button>
-            <button class="nav-btn" onclick="showSection('tech-demo')">Technical Demo</button>
+            <button class="nav-btn active" onclick="showSection('live-test')">Single Inference</button>
+            <button class="nav-btn" onclick="showSection('test-day')">Test Day Engine</button>
+            <button class="nav-btn" onclick="showSection('blind-test')">Historical Metrics</button>
         </nav>
 
         <main>
-            <!-- Live Testing Section -->
+            <!-- Single Inference Section -->
             <section id="live-test" class="glass-panel active">
                 <h2>Live Inference Engine</h2>
                 <div class="upload-area" id="drop-zone" onclick="document.getElementById('file-input').click()">
@@ -42,10 +42,54 @@
                 </div>
             </section>
 
+            <!-- Test Day Section -->
+            <section id="test-day" class="glass-panel" style="display:none;">
+                <h2>Test Day Evaluation Engine</h2>
+                <p>Upload a folder or multiple images of the unknown test set. You can manually label them and run live evaluation.</p>
+                
+                <div class="upload-area" onclick="document.getElementById('test-day-files').click()">
+                    <p>Click to select multiple test images (or folder)</p>
+                    <input type="file" id="test-day-files" hidden accept="image/*" multiple onchange="handleTestDayUpload(event)">
+                </div>
+                
+                <div id="test-day-status" style="margin-bottom: 1rem; color: var(--accent-hover); font-weight: bold;"></div>
+
+                <!-- Gallery for labeling -->
+                <div id="labeling-container" style="display: none;">
+                    <h3>Label the uploaded images:</h3>
+                    <div class="gallery-grid" id="gallery-grid"></div>
+                    <button class="action-btn" onclick="runTestDayEvaluation()" id="run-test-day-btn" style="margin-top:2rem;">Run Inference & Evaluate</button>
+                </div>
+
+                <div id="test-day-results" style="display:none;">
+                    <h3>Live Results</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <h3>Accuracy</h3>
+                            <p id="td-accuracy">0%</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>Precision</h3>
+                            <p id="td-precision">0%</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>Recall</h3>
+                            <p id="td-recall">0%</p>
+                        </div>
+                    </div>
+                    
+                    <div class="charts-container">
+                        <div class="chart-wrapper">
+                            <canvas id="tdConfusionMatrix"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Blind Test / Evaluation Section -->
             <section id="blind-test" class="glass-panel" style="display:none;">
-                <h2>Blind Test Evaluation</h2>
-                <p>Run the model on the unseen blind test folder to calculate real-time performance metrics.</p>
+                <h2>Historical Evaluation</h2>
+                <p>Run the model on the pre-existing unseen blind test folder.</p>
                 <button class="action-btn" onclick="runEvaluation()" id="eval-btn">Run Evaluation on Test Set</button>
                 <div id="loading-spinner" style="display:none;">Running evaluation... please wait...</div>
                 
@@ -71,20 +115,6 @@
                 </div>
             </section>
 
-            <!-- Technical Demo Section -->
-            <section id="tech-demo" class="glass-panel" style="display:none;">
-                <h2>Architecture & Optimization</h2>
-                <div class="tech-content">
-                    <h3>1. Preprocessing</h3>
-                    <p>Satellite imagery undergoes data augmentation (random flips and rotations) during training to increase robustness. We also normalize the images using ImageNet statistics to ensure numerical stability and faster convergence.</p>
-                    
-                    <h3>2. Visual Descriptors & Architecture</h3>
-                    <p>Instead of manual descriptors (like HOG or SIFT), this model utilizes a <strong>Convolutional Neural Network (CNN)</strong>. The CNN consists of 4 convolutional blocks with increasing filter sizes (32 -> 64 -> 128 -> 256), followed by Batch Normalization to prevent internal covariate shift. This enables the model to automatically learn hierarchical visual features tailored for ship detection.</p>
-                    
-                    <h3>3. Hyperparameters & Cross-Validation</h3>
-                    <p>We train using the Adam optimizer with a learning rate of 0.001 and BCEWithLogitsLoss. To ensure generalizability and avoid overfitting, we perform a <strong>5-fold Cross-Validation</strong> across the training set before isolating the best model weights for this final blind evaluation.</p>
-                </div>
-            </section>
         </main>
     </div>
     <script src="app.js"></script>

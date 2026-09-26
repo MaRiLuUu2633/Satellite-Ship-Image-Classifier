@@ -210,3 +210,45 @@ nav {
     line-height: 1.6;
     color: #cbd5e1;
 }
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 1rem;
+    background: rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.gallery-item {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.gallery-item img {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.gallery-item select {
+    width: 100%;
+    background: #1e293b;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    padding: 0.25rem;
+}
+
+.correct-pred {
+    border: 2px solid var(--success-color) !important;
+}
+
+.incorrect-pred {
+    border: 2px solid var(--danger-color) !important;
+}

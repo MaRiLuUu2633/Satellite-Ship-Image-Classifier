@@ -1,0 +1,54 @@
+====================================================
+REGISTRO DE EXPERIMENTOS - Ship Detection Classifier
+====================================================
+
+PROBLEMA DETECTADO:
+  - El modelo baseline con HOG basico fallaba en detectar barcos o se quedaba en ~95% accuracy.
+  - Se requeria un Accuracy > 98.0% sin servidores externos (100% ejecucion local).
+
+====================================================
+BASELINE (v1.0 - Entrenado el 2026-09-25)
+====================================================
+Archivo modelo: model/best_ship_ml.pkl
+Resultados en dataset sintetico inicial: CV Accuracy 0.9984 (fallaba en imagenes reales de Kaggle).
+
+====================================================
+EXPERIMENTO v1.1 - Clasificador Clásico HOG + LBP
+====================================================
+  - Mean CV Accuracy  : 0.9660
+  - Blind Test Accuracy: 0.9588 (95.88%)
+  - Recall (Ship)     : 0.9400
+
+====================================================
+EXPERIMENTO v1.2 - Ensemble Soft Voting (HOG + HSV + LBP)
+====================================================
+  - Blind Test Accuracy: ~96.5%
+
+====================================================
+EXPERIMENTO v1.3 - Hybrid Deep Feature Extractor + Ensemble ML (ALCANZA 98.13%)
+====================================================
+Fecha: 2026-09-26
+Estado: 🏆 OBJETIVO ALCANZADO (98.13% ACCURACY)
+
+--- DESCRIPTORES Y EXTRACTOR ---
+  - ResNet18 Feature Embeddings (512 dimensiones de representacion profunda)
+  - PyTorch DataLoader batched para velocidad extrema en CPU.
+
+--- CLASIFICADOR Y PIPELINE ---
+  - StandardScaler para normalizacion de vectores.
+  - VotingClassifier (Soft Voting) combinando 4 algoritmos de Machine Learning:
+    1. ExtraTreesClassifier (n_estimators=400, class_weight='balanced')
+    2. RandomForestClassifier (n_estimators=400, class_weight='balanced')
+    3. HistGradientBoostingClassifier (max_iter=300, learning_rate=0.05)
+    4. MLPClassifier (hidden_layer_sizes=(256, 128), max_iter=300)
+
+--- RESULTADOS EN BLIND TEST SET (PRUEBA A CIEGAS) ---
+  - Blind Test Accuracy: 0.9813 (98.13%) -> ¡SUPERADO EL 98%!
+  - Precision (Ship)   : 0.9793 (97.93%)
+  - Recall (Ship)      : 0.9450 (189 / 200 barcos detectados correctamente)
+  - Confusion Matrix   : TN=597, FP=4, FN=11, TP=189
+
+--- INTERFAZ Y DESPLIEGUE ---
+  - Interfaz 100% local de escritorio (`desktop_app.py`) con CustomTkinter.
+  - Cero servidores web (sin FastAPI, sin uvicorn).
+  - Totalmente offline y sin dependencias externas en tiempo de ejecucion.
